@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRM-система</title>
+  <link rel="icon" href="./img/logo.svg" type="image/x-icon" />
+  <link rel="stylesheet" href="./css/normalize_8.0.1.css">
+  <link rel="preload" href="./fonts/OpenSans-Regular.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="./fonts/OpenSans-SemiBold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="preload" href="./fonts/OpenSans-Bold.woff2" as="font" type="font/woff2" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/fonts.css">
+  <link rel="stylesheet" href="./css/simplebar.css">
+  <link rel="stylesheet" href="./css/choices.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="body">
+  <header class="header">
+    <div class="container header__container">
+      <a class="header__link" href="#" aria-label="Логотип CRM">
+        <img class="header__logo" src="./img/logo.svg" alt="Логотип CRM">
+      </a>
+      <form class="header__form" autocomplete="off">
+        <div class="autocomplete">
+          <input class="header__input" type="search" id="search" placeholder="Введите запрос">
+        </div>
+      </form>
+    </div>
+  </header>
+  <main class="main">
+    <div class="container main__container">
+      <h1 class="visually-hidden">CRM-система</h1>
+      <h2 class="main__title">Клиенты</h2>
+      <div class="customScroll" data-simplebar>
+        <table class="table" id="table">
+          <thead class="table__head" id="thead">
+            <tr>
+              <th class="table__header-cell">
+                <button class="button table__button" id="id">ID
+                  <svg fill="#9873FF" class="button__arrow">
+                    <use xlink:href="img/sprite.svg#vector_down"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="table__header-cell">
+                <button class="button table__button" id="surname">Фамилия Имя Отчество
+                  <svg fill="#9873FF" class="button__arrow">
+                    <use xlink:href="img/sprite.svg#vector_down"/>
+                  </svg>
+                  <svg fill="#9873FF" class="button__letters">
+                    <use xlink:href="img/sprite.svg#letters"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="table__header-cell">
+                <button class="button table__button" id="createdAt">Дата и время создания
+                  <svg fill="#9873FF" class="button__arrow">
+                    <use xlink:href="img/sprite.svg#vector_down"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="table__header-cell">
+                <button class="button table__button" id="updatedAt">Последние изменения
+                  <svg fill="#9873FF" class="button__arrow">
+                    <use xlink:href="img/sprite.svg#vector_down"/>
+                  </svg>
+                </button>
+              </th>
+              <th class="table__header-cell">
+                <button class="button table__button" disabled>Контакты</button>
+              </th>
+              <th class="table__header-cell">
+                <button class="button table__button" disabled>Действия</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody class="table__body" id="tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="loader" id="loader">
+        <svg class="loader__spinner">
+          <use xlink:href="img/sprite.svg#spinner"/>
+        </svg>
+      </div>
+      <button class="button main__button" id="addClient">
+        <svg fill="#9873FF" class="main__client">
+          <use xlink:href="img/sprite.svg#client+"/>
+        </svg>Добавить клиента
+      </button>
+    </div>
+  </main>
+  
+  <div class="modal-overlay" id="add">
+    <div class="modal">
+      <div class="modal__title-wrapper">
+        <h2 class="modal__title">Новый клиент</h2>
+        <span class="modal__span"></span>
+      </div>
+      <button class="button modal__close-button">
+        <svg class="modal__svg" fill="#B0B0B0">
+          <use xlink:href="img/sprite.svg#close"/>
+        </svg>
+      </button>
+      <form class="form modal__form" action="">
+        <div class="modal__input-wrapper">
+          <input class="modal__input" type="text" name="surname" required>
+          <label class="modal__label">Фамилия<span class="modal__label-span">*</span></label>
+        </div>
+        <div class="modal__input-wrapper">
+          <input class="modal__input" type="text" name="name" required>
+          <label class="modal__label">Имя<span class="modal__label-span">*</span></label>
+        </div>
+        <div class="modal__input-wrapper">
+          <input class="modal__input" type="text" name="lastName">
+          <label class="modal__label">Отчество</label>
+        </div>
+        <div class="modal__button-wraper">
+          <div class="modal__selects"></div>
+          
+          <button class="button modal__button modal__button--add" type="button" id="addContactBtn">
+            <svg class="button__plus">
+              <use xlink:href="img/sprite.svg#plus"/>
+            </svg>Добавить контакт
+          </button>
+        </div>
+        <button class="button modal__button modal__button--save" type="button" id="saveBtn">Сохранить</button>
+        <button class="button modal__button modal__button--cancel" id="cancel" type="button">Отмена</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="delete">
+    <div class="modal">
+      <h2 class="modal__title modal__title--delete">Удалить клиента</h2>
+      <button class="button modal__close-button">
+        <svg class="modal__svg" fill="#B0B0B0">
+          <use xlink:href="img/sprite.svg#close"/>
+        </svg>
+      </button>
+      <p class="modal__text">Вы действительно хотите удалить данного клиента?</p>
+      <div class="button-wrapper">
+        <button class="button modal__button modal__delete-button modal__button--save" type="button">Удалить</button>
+        <button button class="button modal__button modal__cancel-button modal__button--cancel" id="cancelDelete" type="button">Отмена</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="./js/focus-visible.min.js"></script>
+  <script type="text/javascript" src="./js/simplebar.min.js"></script>
+  <script type="text/javascript" src="./js/choices.min.js"></script>
+  <script type="text/javascript" src="./js/index.js"></script>
+</body>
+</html>
